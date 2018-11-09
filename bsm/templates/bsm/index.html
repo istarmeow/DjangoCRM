@@ -1,0 +1,28 @@
+{% extends 'bsm/base.html' %}
+
+{% block title %}
+    主页 - 后台管理
+{% endblock %}
+
+{% block content %}
+    <h1 class="page-header">应用</h1>
+    {% for app_name, app_models in site.enable_admins.items %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ app_name }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for model_name in app_models %}
+                <tr>
+                    <td><a href="#">{{ model_name }}</a></td>
+                    <td>增加</td>
+                    <td>修改</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+
+{% endblock %}

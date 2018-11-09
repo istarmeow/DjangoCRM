@@ -34,9 +34,9 @@ class Role(models.Model):
 
 class UserProfile(models.Model):
     """用户信息表"""
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='users', verbose_name='关联系统User')  # 扩展user模型
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='userprofile', verbose_name='关联系统User')  # 扩展user模型
     name = models.CharField(max_length=50, verbose_name='姓名')
-    role = models.ManyToManyField(Role, related_name='roles', verbose_name='角色列表')
+    role = models.ManyToManyField(Role, related_name='userprofile', verbose_name='角色列表')
 
     class Meta:
         verbose_name_plural = verbose_name = '用户'

@@ -1,5 +1,11 @@
-{% extends 'base.html' %}
+{# bsm/templates/bsm/login.html #}
+{% extends 'bsm/base.html' %}
 {% load static %}
+
+{% block title %}
+    登录 - 后台管理
+{% endblock %}
+
 {% block css %}
     <link href="{% static 'css/signin.css' %}" rel="stylesheet">
 {% endblock %}
