@@ -1,0 +1,39 @@
+{% extends 'djadmin/base.html' %}
+
+{% load djadmin_tags %}
+
+{% block title %}
+    数据表详情 - 后台管理
+{% endblock %}
+
+{% block content %}
+    <h1 class="page-header">应用 - {{ app_name }}</h1>
+    {#  queryset #}
+    <p>
+        <form class="navbar-form navbar-left">
+            {% for filter_field in admin_class.list_filter %}
+                {% build_option_filter filter_field admin_class %}
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">过滤</button>
+        </form>
+    </p>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <!--
+            {% for display_field in admin_class.list_display %}
+                <th>{{ display_field }}</th>
+            {% endfor %}
+            -->
+            {% build_table_head_name admin_class %}
+        </tr>
+        </thead>
+        <tbody>
+            {% for obj in queryset %}
+                <tr>
+                    {% build_table_body obj admin_class %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -24,7 +24,7 @@ urlpatterns = [
     path('crm/', include('crm.urls', namespace='crm')),
     path('login/', user_login, name='user_login'),  # 用户登录
     path('logout/', user_logout, name='user_logout'),  # 退出登录
-    path('bsm/', include('bsm.urls', namespace='bsm')),  # 后台管理
+    path('djadmin/', include('djadmin.urls', namespace='djadmin')),  # 后台管理
 ]
 
 # 上传的文件能直接通过url打开

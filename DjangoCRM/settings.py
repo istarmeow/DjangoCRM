@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crm.apps.CrmConfig',
-    'bsm.apps.BsmConfig',
+    'djadmin.apps.DjadminConfig',
 ]
 
 MIDDLEWARE = [
@@ -129,7 +129,7 @@ STATIC_URL = '/static/'
 # 设置静态资源路径，当有多个静态文件目录的时候可以使用下面的方式
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'bsm/static')
+    os.path.join(BASE_DIR, 'djadmin/static')
 ]
 # 设置我们上传文件的路径
 MEDIA_URL = '/media/'

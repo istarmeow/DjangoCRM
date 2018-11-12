@@ -1,13 +1,12 @@
-from bsm.sites import site
+from djadmin.sites import site
 from crm import models
-from bsm.admin_base import BaseAdmin
-
+from djadmin.djadmin_base import BaseDjAdmin
 
 print('crm models...')
 
 
 # 注册model
-class CustomerInfoAdmin(BaseAdmin):  # 不使用object，直接继承BaseAdmin
+class CustomerInfoAdmin(BaseDjAdmin):  # 不使用object，直接继承BaseDjAdmin
     list_display = ['name', 'contact_type', 'contact', 'consultant', 'consult_content', 'status', 'created_time']
     list_filter = ['source', 'consultant', 'status', 'created_time']
     search_fields = ['contact', 'consultant__name']
