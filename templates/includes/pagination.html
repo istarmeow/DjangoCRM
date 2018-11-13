@@ -1,0 +1,26 @@
+{% load djadmin_tags %}
+<ul class="pagination pagination-sm m-0 float-right">
+    {% if page.number > 1 %}
+        <li class="page-item"><a class="page-link" href="?page=1&_order={{ current_order_field }}&_order={{ current_order_value }}{% render_filter_args admin_class %}" aria-label="">首页</a></li>
+    {% endif %}
+
+    {% if page.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ page.previous_page_number }}&_order={{ current_order_value }}{% render_filter_args admin_class %}">&laquo;</a></li>
+    {% endif %}
+
+    {%  for pg in page.paginator.page_range %}
+        {% if page.number == pg %}
+            <li class="page-item active"><a class="page-link" href="?page={{ pg }}&_order={{ current_order_value }}{% render_filter_args admin_class %}">{{ pg }}</a></li>
+        {% elif pg > page.number|add:'-3' and pg < page.number|add:'3' %}
+            <li class="page-item"><a class="page-link" href="?page={{ pg }}&_order={{ current_order_value }}{% render_filter_args admin_class %}">{{ pg }}</a></li>
+        {% endif %}
+    {% endfor %}
+
+    {% if page.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page.next_page_number }}&_order={{ current_order_value }}{% render_filter_args admin_class %}">&raquo;</a></li>
+    {% endif %}
+
+    {% if page.number != page.paginator.num_pages %}
+        <li class="page-item"><a class="page-link" href="?page={{ page.paginator.num_pages }}&_order={{ current_order_value }}{% render_filter_args admin_class %}" aria-label="">尾页</a></li>
+    {% endif %}
+</ul>

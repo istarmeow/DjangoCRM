@@ -53,7 +53,10 @@
                 {% endif %}
             </ul>
             <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search...">
+                <input name="_kw" type="text" class="form-control" placeholder="Search..." value="{{ keyword }}">
+                {% for k, v in admin_class.filter_conditions.items %}
+                    <input type="hidden" name="{{ k }}" value="{{ v }}">
+                {% endfor %}
             </form>
         </div>
     </div>
