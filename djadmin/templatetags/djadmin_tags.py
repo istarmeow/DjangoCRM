@@ -32,7 +32,7 @@ def build_table_body(obj, admin_class):
     """
     td = ''
     if admin_class.list_display:
-        for display_field in admin_class.list_display:
+        for index, display_field in enumerate(admin_class.list_display):  # 增加enumerate函数实现自动增加索引号
             # 获取列中的字段对象
             display_field_obj = admin_class.model._meta.get_field(display_field)
             # print(display_field_obj)
@@ -44,9 +44,12 @@ def build_table_body(obj, admin_class):
                 # 根据属性名，获取对象的属性值，两个参数，一个对象obj，一个列名
                 display_field_data = getattr(obj, display_field)  # 获取一个对象的属性值，例如<CustomerInfo: 小东>对象，得到他的name属性，值为小东
             tmp = "<td>{}</td>".format(display_field_data)
+            if index == 0:  # 当列的索引号为0，也就是第一列时，增加a标签
+                tmp = "<td><a href='{}/change/'>{}</a></td>".format(obj.id, display_field_data)
             td += tmp
     else:
-        td += "<td>{}</td>".format(obj)  # 如果没有自定义注册字段，则显示对象的内容verbose_name
+        # td += "<td>{}</td>".format(obj)  # 如果没有自定义注册字段，则显示对象的内容verbose_name
+        td += "<td><a href='{}/change/'>{}</a></td>".format(obj.id, obj)  # 没有list_display列表，就直接添加修改a标签
     return mark_safe(td)
 
 

@@ -94,7 +94,7 @@ def table_detail(request, app_name, model_name):
     # 拿到admin_class后，通过它获取model
     admin_class = site.enable_admins[app_name][model_name]
     # print(admin_class)  # 执行djadmin.py定义的注册模型类
-    queryset = admin_class.model.objects.all()
+    queryset = admin_class.model.objects.all().order_by('-id')
     # print(queryset)
 
     # 进行过滤
@@ -126,3 +126,38 @@ def table_detail(request, app_name, model_name):
         queryset = paginator.get_page(paginator.num_pages)
 
     return render(request, 'djadmin/table_detail.html', locals())
+
+
+# 数据修改
+@login_required
+def table_change(request, app_name, model_name, obj_id):
+    from .form_handle import create_dynamic_model_form
+    admin_class = site.enable_admins[app_name][model_name]
+    model_form = create_dynamic_model_form(admin_class=admin_class)
+    # 实例化
+    obj = admin_class.model.objects.get(id=obj_id)  # 获取修改的实例，并将原值初始化到表单中
+    form_obj = model_form(instance=obj)
+    if request.method == 'POST':
+        form_obj = model_form(instance=obj, data=request.POST)
+        # print(form_obj.errors)
+        if form_obj.is_valid():
+            form_obj.save()
+            # 修改保存成功后跳转
+            return redirect(reverse('djadmin:table_detail', kwargs={'app_name': app_name, 'model_name': model_name}))
+    return render(request, 'djadmin/table_edit.html', locals())
+
+
+# 数据添加
+@login_required
+def table_add(request, app_name, model_name):
+    from .form_handle import create_dynamic_model_form
+    admin_class = site.enable_admins[app_name][model_name]
+    model_form = create_dynamic_model_form(admin_class=admin_class)
+
+    form_obj = model_form()
+    if request.method == 'POST':
+        form_obj = model_form(data=request.POST)
+        if form_obj.is_valid():
+            form_obj.save()
+            return redirect(reverse('djadmin:table_detail', kwargs={'app_name': app_name, 'model_name': model_name}))
+    return render(request, 'djadmin/table_edit.html', locals())

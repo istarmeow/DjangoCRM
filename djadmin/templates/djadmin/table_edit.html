@@ -1,0 +1,31 @@
+{% extends 'djadmin/base.html' %}
+
+{% load djadmin_tags %}
+
+{% block title %}
+    数据表编辑 - 后台管理
+{% endblock %}
+
+{% block content %}
+    <h1 class="page-header">{{ app_name }} - {{ model_name }} - 编辑 &nbsp;&nbsp; {{ obj }} </h1>
+    <!--<div>{{ form_obj }}</div>-->
+    <form class="form-horizontal" method="post">
+        {{ form_obj.errors }}
+
+        {% for field in form_obj %}
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">{{ field.label }}</label>
+                <div class="col-sm-10">
+                    {{ field }}
+                    <span style="color: red">{{ field.errors.0 }}</span>
+                </div>
+            </div>
+        {% endfor %}
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">提交</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
